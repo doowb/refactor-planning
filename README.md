@@ -1,4 +1,6 @@
-refactor-temp
-=============
+# refactor-temp
 
-Temporary repo to plan refactor of assemble.
+> Temporary repo to discuss the plan for refactoring Assemble.
+
+The project structure is flexible and will change.
+
