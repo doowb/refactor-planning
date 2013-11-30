@@ -8,38 +8,71 @@
  * Licensed under the MIT License (MIT).
  */
 
+var inspect = require('util').inspect;
+
 var logger = require('../lib/logger')();
 var config = require('../lib/config');
-var data = require('../lib/data');
+var Data = require('../lib/data');
 
 config.debugLevel = 5;
 
-data.init();
+var data = new Data({});
 
-module.exports.create = function(test) {
-  
+module.exports.insert = function(test) {
   test.expect(1);
-
-  data.create({foo: 'bar'}, function() {
-    console.log('new object created');
-  });
-
+  data.insert({foo: 'bar'}, function(err, obj) {
+    if(err) {
+      logger.log('Error:');
+      logger.log(inspect(err, null, 10));
+    } else {
+      logger.log('new object created');
+      logger.log(inspect(obj, null, 10));
+    }
   test.ok(true);
   test.done();
-
+  });
 };
 
-module.exports.read = function(test) {
-  
+module.exports.find = function(test) {
   test.expect(1);
+  data.find({foo: 'bar'}, function(err, results) {
+    if(err) {
+      logger.log('Error');
+      logger.log(inspect(err, null, 10));
+    } else {
+      logger.log('results: ');
+      logger.log(inspect(results, null, 10));
+    }
+    test.ok(true);
+    test.done();
+  });
+};
 
-  data.read(function() { return true; },
-    function(results) {
-      console.log(results.length + ' items found.');
-    });
+module.exports.findOne = function(test) {
+  test.expect(1);
+  data.findOne({foo: 'bar'}, function(err, results) {
+    if(err) {
+      logger.log('Error');
+      logger.log(inspect(err, null, 10));
+    } else {
+      logger.log('results: ');
+      logger.log(inspect(results, null, 10));
+    }
+    test.ok(true);
+    test.done();
+  });
+};
 
-  test.ok(true);
-
-  test.done();
-
+module.exports.update = function(test) {
+  test.expect(1);
+  data.update({foo: 'bar'}, {foo: 'baz'}, {}, function(err, results) {
+    if(err) {
+      logger.log('Error');
+      logger.log(inspect(err, null, 10));
+    } else {
+      logger.log('documents updated: ' + results);
+    }
+    test.ok(true);
+    test.done();
+  });
 };

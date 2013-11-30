@@ -9,6 +9,6 @@
     "grunt-contrib-watch": "~0.5.3"
   },
   "dependencies": {
-    "nosql": "~2.0.0"
+    "nedb": "~0.8.13"
   }
 }
